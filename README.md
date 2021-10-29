@@ -11,7 +11,7 @@ Contains DAG code to remotely execute a river. Must trigger dag with config file
 
 
 ### 2. river_check_status.
-Contains DAG code to check the status of a river provided the run_id. Must trigger dag with config file in the format
+Contains DAG code to check the status of a river provided the run_id. Must trigger dag with config file in the format:
 
 {"run_id": "<your_run_id>",
 "access_token": "<your_access_token>"}

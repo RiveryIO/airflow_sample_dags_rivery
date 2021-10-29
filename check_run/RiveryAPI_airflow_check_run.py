@@ -16,7 +16,7 @@ with DAG(
     tags=["example"],
 ) as dag:
 
-	def run_river(**kwargs):
+	def check_river(**kwargs):
 		"""Import libraries"""
 		import requests
 		import json
@@ -36,14 +36,15 @@ with DAG(
 		response = requests.request("GET", url, headers=headers, data=payload)
  
 		print(response.text)
+		return response.json()['river_run_status']
 
 
 	"""Create dummy operator for dag initiation."""
 	start = DummyOperator(task_id="Initiate_Dag", dag=dag)
 
 	run_this = PythonOperator(
-		task_id="Execute_River",
-		python_callable=run_river,
+		task_id="Check_run_status",
+		python_callable=check_river,
 	)
 
 	"""Execute DAG."""

@@ -7,6 +7,7 @@ from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import PythonOperator
 
+"""Set default values for variables."""
 with DAG(
     dag_id="airflow_rivery_python_test",
     schedule_interval='@once',
@@ -20,11 +21,11 @@ with DAG(
 		import requests
 		import json
 		
-		"""parse configuration variables"""
+		"""Parse configuration variables."""
 		river_id = kwargs['dag_run'].conf['river_id']
 		access_token = kwargs['dag_run'].conf['access_token']
 		
-
+		"""Make HTTP request and log the response."""
 		url = "https://console.rivery.io/api/run"  
 		payload = json.dumps({
 			"river_id": f"{river_id}"
@@ -39,6 +40,7 @@ with DAG(
 		print(response.text)
 		return response.json()['run_id']
 
+	"""Create dummy operator for dag initiation."""
 	start = DummyOperator(task_id="Initiate_Dag", dag=dag)
 
 	run_this = PythonOperator(
@@ -46,4 +48,5 @@ with DAG(
 		python_callable=run_river,
 	)
 
+	"""Execute DAG."""
 	run_this.set_upstream(start)

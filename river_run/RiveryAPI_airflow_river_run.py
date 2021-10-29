@@ -1,4 +1,4 @@
-# Rivery API Airflow DAG example vua python
+# Rivery API Airflow DAG example - river_run
 
 # Import libraries.
 from datetime import datetime, timedelta
@@ -9,7 +9,7 @@ from airflow.operators.python import PythonOperator
 
 """Set default values for variables."""
 with DAG(
-    dag_id="airflow_rivery_python_test",
+    dag_id="airflow_rivery_river_run",
     schedule_interval='@once',
     start_date=datetime.now(),
     catchup=False,
